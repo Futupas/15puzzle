@@ -1,94 +1,96 @@
 'use strict';
-let Puzzle = [
-    [ {}, {}, {}, {} ],
-    [ {}, {}, {}, {} ],
-    [ {}, {}, {}, {} ],
-    [ {}, {}, {}, {} ]
-];
 
-// i,j - картинка ячейки (ее положение) (не меняется)
-// x,y - положение ячейки (меняется)
-// Puzzle[0][0] - пустая ячейка
-// i, x - по горизонтали; j,x - по вертикали
+let Puzzle15 = {
+    Puzzle: [],
+    emtrycell: {
+        x: 0,
+        y: 0
+    },
+    size: {
+        rows: 0,
+        cols: 0
+    },
+    Draw: function (options, styles) {
+        this.emtrycell.x = options.emtryx;
+        this.emtrycell.y = options.emtryy;
 
-for (let i = 0; i < 4; i++){
-    for (let j = 0; j < 4; j++){
-        Puzzle[i][j] = { x: i, y: j };
-    }
-}
+        this.size.cols = options.cols;
+        this.size.rows = options.rows;
 
-function Draw () {
-    let imgsrc = './puzzleimage.png';
-    document.getElementById('puzzlediv').innerHTML = '';
-    
-    //let divs = [4,4];
-    for (let i = 0; i < 4; i++){
-        for (let j = 0; j < 4; j++){
-            let div = document.createElement('div');
-            div.style.left = (Puzzle[i][j].x)*128 + 'px';
-            div.style.top = (Puzzle[i][j].y)*128 + 'px';
-            div.setAttribute('data-ij', (i+''+j));
-            div.setAttribute('data-xy', (Puzzle[i][j].x+''+Puzzle[i][j].y));
-            
-            div.onclick = function (e) {
-                var ij = e.target.parentElement.getAttribute('data-ij');
-                //console.log(ij);
-                //console.log(e);
-                MoveCell(ij);
+        for (let i = 0; i < this.size.cols; i++) { // cols
+            let col = [];
+            for (let j = 0; j < this.size.rows; j++) { // rows
+                col.push({x: i, y: j});
             }
-
-            let img = document.createElement('img');
-
-            if (i == 0 && j == 0) {
-                img.style.display = 'none';
-                div.style.backgroundColor = '#bbbbbb';
-                div.style.zIndex = '2';
-            } else {
-                img.src = imgsrc;
-                img.style.left = (i)*-128 + 'px';
-                img.style.top = (j)*-128 + 'px';
-                div.style.zIndex = '1';
-            }
-
-            div.appendChild(img);
-
-            document.getElementById('puzzlediv').appendChild(div);
+            this.Puzzle.push(col);
         }
+
+        // for (let i = 0; i < this.size.cols; i++) { // cols
+        //     for (let j = 0; j < this.size.rows; j++) { // rows
+        //         console.log(i+''+j+'  '+this.Puzzle[i][j].x+''+this.Puzzle[i][j].y);
+        //     }
+        // }
+
+        SetStyles(options, styles);
+
+    },
+    SetStyles (options, styles) {
+        var styles = '';
+        var container = [];
+            container.push('position: relative;');
+            container.push('width: ' + options.width + 'px;');
+            container.push('height: ' + options.height + 'px;');
+        var div = [];
+            div.push('position: absolute;');
+            div.push('top: 0px;');
+            div.push('left: 0px;');
+            div.push('overflow: hidden;');
+            div.push('width: '+Math.floor(options.width / options.cols)+'px;');
+            div.push('height: '+Math.floor(options.height / options.rows)+'px;');
+            div.push('transition: top '+styles.animation.duration+'ms '+styles.animation.function+', left '+styles.animation.duration+'ms '+styles.animation.function+';');
+            //div.push('');
+        var img  = [];
+            img.push('position: absolute;');
+            img.push('top: 0px;');
+            img.push('left: 0px;');
+            img.push('width: '+options.width+'px;');
+            img.push('height: '+options.height+'px;');
+        
+        styles += ('#'+options.container+' { '+container.join(' ')+' }\n');
+        styles += ('#'+options.container+' > div { '+div.join(' ')+' }\n');
+        styles += ('#'+options.container+' > div > img { '+img.join(' ')+' }\n');
+
+        let stl = document.createElement('style');
+        stl.innerHTML = styles;
+        document.head.appendChild(stl);
     }
 }
 
-function Move () {
-    let imgsrc = './puzzleimage.png';
-    
-    for (let i = 0; i < 4; i++){
-        for (let j = 0; j < 4; j++){
-            let div = document.querySelector('#puzzlediv > div[data-ij="'+(i+''+j)+'"]');
-            div.style.left = (Puzzle[i][j].x)*128 + 'px';
-            div.style.top = (Puzzle[i][j].y)*128 + 'px';
-            div.setAttribute('data-ij', (i+''+j));
-            div.setAttribute('data-xy', (Puzzle[i][j].x+''+Puzzle[i][j].y));
-        }
+/*
+let options = {
+    rows: 4,             // строки
+    cols: 4,             // столбцы
+    width: 512,          // ширина
+    height: 512          // высота
+    image: '',           // картинка
+    container: '',       // id контейнер (родитель)
+    emtryx: 0,           // x пустой ячейки
+    emtryy: 0            // y пустой ячейки
+}
+let styles = {
+    animation: {
+        duration: 0, //ms
+        function: '' //linear
+    },
+    emtry: {
+        color: '',
+        image: ''
+    },
+    border: {
+        width: 2,
+        style: '',
+        color: ''
     }
 }
+*/
 
-function SetEmtry (x, y) {
-    var changed = { x: Puzzle[x][y].x, y: Puzzle[x][y].y};
-    var emtry = { x: Puzzle[0][0].x, y: Puzzle[0][0].y};
-
-    Puzzle[x][y].x = emtry.x;
-    Puzzle[x][y].y = emtry.y;
-    Puzzle[0][0].x = changed.x;
-    Puzzle[0][0].y = changed.y;
-}
-
-function MoveCell(ij) {
-    var i = +(ij[0]);
-    var j = +(ij[1]);
-    var c = { x: Puzzle[i][j].x, y: Puzzle[i][j].y };
-    var e = { x: Puzzle[0][0].x, y: Puzzle[0][0].y };
-
-    if ((c.x == e.x && Math.abs(c.y-e.y) == 1) || ((c.y == e.y && Math.abs(c.x-e.x) == 1))) {
-        SetEmtry(i, j);
-        Move();
-    }
-}

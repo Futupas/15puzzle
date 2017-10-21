@@ -40,9 +40,18 @@
     <div id="puzzlediv" style="height: 512px; width: 512px;">
 
     </div>
-    <script src="./puzzle_orig.js"></script>
+    <script src="./puzzle.js"></script>
     <script>
-        Draw();
+        Puzzle15.Draw({
+            rows: 7,             // строки
+            cols: 3,             // столбцы
+            width: 512,          // ширина
+            height: 512,         // высота
+            image: '',           // картинка
+            container: '',  // контейнер (родитель)
+            emtryx: 0,           // x пустой ячейки
+            emtryy: 0            // y пустой ячейки
+        }, {});
     </script>
 </body>
 </html>

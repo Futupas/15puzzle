@@ -30,20 +30,43 @@ function Draw () {
             div.setAttribute('data-ij', (i+''+j));
             div.setAttribute('data-xy', (Puzzle[i][j].x+''+Puzzle[i][j].y));
             
+            div.onclick = function (e) {
+                var ij = e.target.parentElement.getAttribute('data-ij');
+                //console.log(ij);
+                //console.log(e);
+                MoveCell(ij);
+            }
+
             let img = document.createElement('img');
 
             if (i == 0 && j == 0) {
                 img.style.backgroundColor = '#ffffff';
                 img.src = '';
+                div.style.zIndex = '2';
             } else {
                 img.src = imgsrc;
                 img.style.left = (i)*-128 + 'px';
                 img.style.top = (j)*-128 + 'px';
+                div.style.zIndex = '1';
             }
 
             div.appendChild(img);
 
             document.getElementById('puzzlediv').appendChild(div);
+        }
+    }
+}
+
+function Move () {
+    let imgsrc = './puzzleimage.png';
+    
+    for (let i = 0; i < 4; i++){
+        for (let j = 0; j < 4; j++){
+            let div = document.querySelector('#puzzlediv > div[data-ij="'+(i+''+j)+'"]');
+            div.style.left = (Puzzle[i][j].x)*128 + 'px';
+            div.style.top = (Puzzle[i][j].y)*128 + 'px';
+            div.setAttribute('data-ij', (i+''+j));
+            div.setAttribute('data-xy', (Puzzle[i][j].x+''+Puzzle[i][j].y));
         }
     }
 }
@@ -56,4 +79,9 @@ function SetEmtry (x, y) {
     Puzzle[x][y].y = emtry.y;
     Puzzle[0][0].x = changed.x;
     Puzzle[0][0].y = changed.y;
+}
+
+function MoveCell(ij) {
+    SetEmtry(+(ij[0]), +(ij[1]));
+    Move();
 }

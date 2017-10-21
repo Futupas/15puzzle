@@ -40,8 +40,8 @@ function Draw () {
             let img = document.createElement('img');
 
             if (i == 0 && j == 0) {
-                img.style.backgroundColor = '#ffffff';
-                img.src = '';
+                img.style.display = 'none';
+                div.style.backgroundColor = '#bbbbbb';
                 div.style.zIndex = '2';
             } else {
                 img.src = imgsrc;

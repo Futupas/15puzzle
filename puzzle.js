@@ -82,6 +82,13 @@ function SetEmtry (x, y) {
 }
 
 function MoveCell(ij) {
-    SetEmtry(+(ij[0]), +(ij[1]));
-    Move();
+    var i = +(ij[0]);
+    var j = +(ij[1]);
+    var c = { x: Puzzle[i][j].x, y: Puzzle[i][j].y };
+    var e = { x: Puzzle[0][0].x, y: Puzzle[0][0].y };
+
+    if ((c.x == e.x && Math.abs(c.y-e.y) == 1) || ((c.y == e.y && Math.abs(c.x-e.x) == 1))) {
+        SetEmtry(i, j);
+        Move();
+    }
 }

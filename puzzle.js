@@ -1,81 +1,88 @@
 'use strict';
 
-let Puzzle15 = {
-    Puzzle: [],
-    emtrycell: {
-        x: 0,
-        y: 0
-    },
-    size: {
-        rows: 0,
-        cols: 0
-    },
-    Draw: function (options, styles) {
-        this.emtrycell.x = options.emtryx;
-        this.emtrycell.y = options.emtryy;
+// class
+function Puzzle15 (options, styles) {
+    // fields
+    this._Puzzle = [];
+    // this._size = {
+    //     rows: 0,
+    //     cols: 0,
+    //     width: 0,
+    //     height: 0
+    // };
+    // this._image = '';
+    // this._container = '';
+    // this._emtry = {
+    //     x: 0,
+    //     y: 0
+    // };
+    // this._styles = {
+    //     animation: {
+    //         duration: 0, //ms
+    //         function: '' //linear
+    //     },
+    //     emtry: {
+    //         color: '',
+    //         image: ''
+    //     },
+    //     border: {
+    //         width: 2,
+    //         style: '',
+    //         color: ''
+    //     }
+    // };
 
-        this.size.cols = options.cols;
-        this.size.rows = options.rows;
-
-        for (let i = 0; i < this.size.cols; i++) { // cols
-            let col = [];
-            for (let j = 0; j < this.size.rows; j++) { // rows
-                col.push({x: i, y: j});
-            }
-            this.Puzzle.push(col);
+    // constructor
+    this._size = {
+        rows: options.size.rows || 4,
+        cols: options.size.cols || 4,
+        width: options.size.width || 512,
+        height: options.size.height || 512
+    };
+    this._image = options.image || '';
+    this._container = options.container || '#puzzlediv';
+    this._emtry = {
+        x: options.emtry.x || 0,
+        y: options.emtry.y || 0
+    };
+    this._styles = {
+        animation: {
+            duration: styles.animation.duration || 0.3,
+            function: styles.animation.function || 'linear'
+        },
+        emtry: {
+            color: styles.emtry.color || '#ffffff',
+            image: styles.emtry.image || undefined
+        },
+        border: {
+            width: styles.border.width || 0,
+            style: styles.border.style || 'solid',
+            color: styles.border.color || '#000000'
         }
+    };
+}
 
-        // for (let i = 0; i < this.size.cols; i++) { // cols
-        //     for (let j = 0; j < this.size.rows; j++) { // rows
-        //         console.log(i+''+j+'  '+this.Puzzle[i][j].x+''+this.Puzzle[i][j].y);
-        //     }
-        // }
+Puzzle15.prototype.Draw = function () {
 
-        SetStyles(options, styles);
+}
+Puzzle15.prototype.Move = function () {
 
-    },
-    SetStyles (options, styles) {
-        var styles = '';
-        var container = [];
-            container.push('position: relative;');
-            container.push('width: ' + options.width + 'px;');
-            container.push('height: ' + options.height + 'px;');
-        var div = [];
-            div.push('position: absolute;');
-            div.push('top: 0px;');
-            div.push('left: 0px;');
-            div.push('overflow: hidden;');
-            div.push('width: '+Math.floor(options.width / options.cols)+'px;');
-            div.push('height: '+Math.floor(options.height / options.rows)+'px;');
-            div.push('transition: top '+styles.animation.duration+'ms '+styles.animation.function+', left '+styles.animation.duration+'ms '+styles.animation.function+';');
-            //div.push('');
-        var img  = [];
-            img.push('position: absolute;');
-            img.push('top: 0px;');
-            img.push('left: 0px;');
-            img.push('width: '+options.width+'px;');
-            img.push('height: '+options.height+'px;');
-        
-        styles += ('#'+options.container+' { '+container.join(' ')+' }\n');
-        styles += ('#'+options.container+' > div { '+div.join(' ')+' }\n');
-        styles += ('#'+options.container+' > div > img { '+img.join(' ')+' }\n');
-
-        let stl = document.createElement('style');
-        stl.innerHTML = styles;
-        document.head.appendChild(stl);
-    }
 }
 
 /*
 let options = {
-    rows: 4,             // строки
-    cols: 4,             // столбцы
-    width: 512,          // ширина
-    height: 512          // высота
-    image: '',           // картинка
-    container: '',       // id контейнер (родитель)
-    emtryx: 0,           // x пустой ячейки
-    emtryy: 0            // y пустой ячейки
+    size: {
+        rows: 4,             // строки
+        cols: 4,             // столбцы
+        width: 512,          // ширина
+        height: 512          // высота
+    },
+    image: '',               // картинка
+    container: '',           // id контейнер (родитель)
+    emtry: {
+        x: 0,                // x пустой ячейки
+        y: 0                 // y пустой ячейки
+    }         
 }
 let styles = {
     animation: {

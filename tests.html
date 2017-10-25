@@ -5,37 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>15 Puzzle</title>
-    <!-- <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        body{
-            padding: 20px;
-            background-color: #bbbbbb;
-        }
-        #puzzlediv {
-            position: relative;
-        }
-        #puzzlediv > div{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 126px; /*128*/
-            height: 126px; /*128*/
-            overflow: hidden;
-            transition: top 0.5s linear, left 0.5s linear;
-            border: 2px solid #ffffff
-        }
-        #puzzlediv > div > img{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 512px;
-            height: 512px;
-        }
-    </style> -->
-
     <style>
             *{
                 margin: 0px;
@@ -43,7 +12,7 @@
             }
             body{
                 padding: 20px;
-                background-color: #bbbbbb;
+                background-color: #cccccc;
             }
         </style>
 </head>
@@ -61,7 +30,7 @@
                 width: 512,          // ширина
                 height: 512          // высота
             },
-            image: 'E:\\PROJECTS\\15Puzzle\\puzzleimage.png',               // картинка
+            image: 'puzzleimage.png',               // картинка
             container: '#puzzlediv',           // id контейнер (родитель)
             emtry: {
                 x: 0,                // x пустой ячейки
@@ -70,17 +39,17 @@
         };
         let styles = {
             animation: {
-                duration: 0, //ms
-                function: '' //linear
+                duration: 300, //ms
+                function: 'linear' //linear
             },
             emtry: {
-                color: '#ff0000',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Icon_Pinguin_1_512x512.png'
+                color: '#999999',
+                image: 'emtryimage.png'
             },
             border: {
                 width: 2,
                 style: 'solid',
-                color: '#ff0000'
+                color: '#999999'
             }
         };
 

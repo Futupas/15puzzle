@@ -6,43 +6,89 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>15 Puzzle</title>
     <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        body{
-            padding: 20px;
-            background-color: #bbbbbb;
-        }
-        #puzzlediv {
-            position: relative;
-        }
-        #puzzlediv > div{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 126px; /*128*/
-            height: 126px; /*128*/
-            overflow: hidden;
-            transition: top 0.5s linear, left 0.5s linear;
-            border: 2px solid #ffffff
-        }
-        #puzzlediv > div > img{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 512px;
-            height: 512px;
-        }
-    </style>
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+            body{
+                padding: 20px;
+                background-color: #cccccc;
+            }
+        </style>
 </head>
 <body>
-    <div id="puzzlediv" style="height: 512px; width: 512px;">
-
-    </div>
-    <script src="./puzzle_orig.js"></script>
+    <div id="puzzlediv" style="height: 512px; width: 512px;"></div>
+    <script src="./puzzle.js"></script>
     <script>
-        Draw();
+        'use strict';
+        let options = {
+            size: {
+                rows: 4,             // строки
+                cols: 4,             // столбцы
+                width: 512,          // ширина
+                height: 512          // высота
+            },
+            image: 'puzzleimage.png',               // картинка
+            container: '#puzzlediv',           // id контейнер (родитель)
+            emtry: {
+                x: 3,                // x пустой ячейки
+                y: 3                 // y пустой ячейки
+            }         
+        };
+        let styles = {
+            animation: {
+                duration: 300, //ms
+                function: 'linear' //linear
+            },
+            emtry: {
+                color: '#999999',
+                image: 'emtryimage.png'
+            },
+            border: {
+                width: 2,
+                style: 'solid',
+                color: '#999999'
+            }
+        };
+
+        switch (window.location.hash.toLowerCase()) {
+            case '#vika1':
+                options = {
+                    size: {
+                        rows: 4,
+                        cols: 4,
+                        width: 512,
+                        height: 512
+                    },
+                    image: 'https://i.imgur.com/oUlcfQd.jpg',
+                    container: '#puzzlediv',
+                    emtry: {
+                        x: 3,
+                        y: 3
+                    }         
+                };
+                break;
+            case '#vika2': 
+                options = {
+                    size: {
+                        rows: 10,
+                        cols: 5,
+                        width: 512,
+                        height: 512
+                    },
+                    image: 'https://i.imgur.com/oUlcfQd.jpg',
+                    container: '#puzzlediv',
+                    emtry: {
+                        x: 0,
+                        y: 0
+                    }         
+                };
+                break;
+        }
+
+        let a = new Puzzle15(options, styles);
+        a.Draw();
+
     </script>
 </body>
 </html>

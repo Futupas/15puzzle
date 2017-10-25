@@ -42,16 +42,40 @@
     </div>
     <script src="./puzzle.js"></script>
     <script>
-        Puzzle15.Draw({
-            rows: 7,             // строки
-            cols: 3,             // столбцы
-            width: 512,          // ширина
-            height: 512,         // высота
-            image: '',           // картинка
-            container: '',  // контейнер (родитель)
-            emtryx: 0,           // x пустой ячейки
-            emtryy: 0            // y пустой ячейки
-        }, {});
+        'use strict';
+        let options = {
+            size: {
+                rows: 4,             // строки
+                cols: 4,             // столбцы
+                width: 512,          // ширина
+                height: 512          // высота
+            },
+            image: 'https://www.xmple.com/wallpaper/white-hexagon-blue-gradient-glow-black-512x512-c4-000000-ffffff-00ced1-000000-l2-10-124-a-45-f-6.svg',               // картинка
+            container: '#puzzlediv',           // id контейнер (родитель)
+            emtry: {
+                x: 0,                // x пустой ячейки
+                y: 0                 // y пустой ячейки
+            }         
+        };
+        let styles = {
+            animation: {
+                duration: 0, //ms
+                function: '' //linear
+            },
+            emtry: {
+                color: '#ff0000',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Icon_Pinguin_1_512x512.png'
+            },
+            border: {
+                width: 2,
+                style: '',
+                color: ''
+            }
+        };
+
+        let a = new Puzzle15(options, styles);
+        a.Draw();
+
     </script>
 </body>
 </html>

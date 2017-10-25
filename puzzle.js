@@ -62,11 +62,56 @@ function Puzzle15 (options, styles) {
     };
 }
 
-Puzzle15.prototype.Draw = function () {
+Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling Puzzle too)
+    for (let i = 0; i < this._size.cols; i++) { // cols
+        let col = [];
+        for (let j = 0; j < this._size.rows; j++) { // rows
+            col.push({x: i, y: j});
+        }
+        this._Puzzle.push(col);
+    }
+    
+    document.querySelector(this._container).innerHTML = '';
+    for (let i = 0; i < this._size.cols; i++) { // cols
+        for (let j = 0; j < this._size.rows; j++) { // rows
+            let div = document.createElement('div');
+            div.style.left = (this._Puzzle[i][j].x) * Math.floor(this._size.width/this._size.cols) + 'px';
+            div.style.top = (this._Puzzle[i][j].y) * Math.floor(this._size.height/this._size.rows) + 'px';
+            div.setAttribute('data-ij', (i+''+j));
+            //div.setAttribute('data-xy', (this._Puzzle[i][j].x+''+Puzzle[i][j].y));
+            
+            div.onclick = function (e) {
+                let cx = i, cy = j;
+            }
 
+            let img = document.createElement('img');
+
+            if (this._emtry.x == i && this._emtry.y == j) {
+                if (this._styles.emtry.image !== undefined && this._styles.emtry.image !== null && this._styles.emtry.image !== 0 && this._styles.emtry.image !== '') {
+                    img.src = this._styles.emtry.image;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                } else {
+                    img.style.display = 'none';
+                }
+                
+                div.style.backgroundColor = this._styles.color;
+                div.style.zIndex = '2';
+            } else {
+                img.src = this._image;
+                img.style.left = (i) * -1 * Math.floor(this._size.width/this._size.cols) + 'px';
+                img.style.top = (j) * -1 * Math.floor(this._size.height/this._size.rows) + 'px';
+                div.style.zIndex = '1';
+            }
+
+            div.appendChild(img);
+
+            document.querySelector(this._container).appendChild(div);
+        }
+    }
 }
-Puzzle15.prototype.Move = function () {
-
+Puzzle15.prototype.Move = function () { // This method will be called when user clicks a pic
+    //
 }
 
 /*

@@ -2,36 +2,7 @@
 
 // class
 function Puzzle15 (options, styles) {
-    // fields
     this._Puzzle = [];
-    // this._size = {
-    //     rows: 0,
-    //     cols: 0,
-    //     width: 0,
-    //     height: 0
-    // };
-    // this._image = '';
-    // this._container = '';
-    // this._emtry = {
-    //     x: 0,
-    //     y: 0
-    // };
-    // this._styles = {
-    //     animation: {
-    //         duration: 0, //ms
-    //         function: '' //linear
-    //     },
-    //     emtry: {
-    //         color: '',
-    //         image: ''
-    //     },
-    //     border: {
-    //         width: 2,
-    //         style: '',
-    //         color: ''
-    //     }
-    // };
-
     // constructor
     this._size = {
         rows: options.size.rows || 4,
@@ -63,6 +34,7 @@ function Puzzle15 (options, styles) {
 }
 
 Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling Puzzle too)
+    // ===== Fill Puzzle
     for (let i = 0; i < this._size.cols; i++) { // cols
         let col = [];
         for (let j = 0; j < this._size.rows; j++) { // rows
@@ -71,6 +43,37 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
         this._Puzzle.push(col);
     }
     
+    // ===== Set styles
+    let styles = '';
+    let container = [];
+    /**/container.push('position: relative;');
+    /**/container.push('width: ' + this._size.width + 'px;');
+    /**/container.push('height: ' + this._size.height + 'px;');
+    let div = [];
+    /**/div.push('position: absolute;');
+    /**/div.push('top: 0px;');
+    /**/div.push('left: 0px;');
+    /**/div.push('overflow: hidden;');
+    /**/div.push('width: '+Math.floor(this._size.width / this._size.cols - this._styles.border.width)+'px;');
+    /**/div.push('height: '+Math.floor(this._size.height / this._size.rows - this._styles.border.width)+'px;');
+    /**/div.push('transition: top ' + this._styles.animation.duration+'ms ' + this._styles.animation.function+', left ' + this._styles.animation.duration+'ms ' + this._styles.animation.function + ';');
+    /**/div.push('border: ' + this._styles.border.width+'px ' + this._styles.border.style + ' ' + this._styles.border.color + ';');
+    let img  = [];
+    /**/img.push('position: absolute;');
+    /**/img.push('top: 0px;');
+    /**/img.push('left: 0px;');
+    /**/img.push('width: '+this._size.width+'px;');
+    /**/img.push('height: '+this._size.height+'px;');
+
+    styles += (this._container+' { '+container.join(' ')+' }\n');
+    styles += (this._container+' > div { '+div.join(' ')+' }\n');
+    styles += (this._container+' > div > img { '+img.join(' ')+' }\n');
+
+    let stl = document.createElement('style');
+    stl.innerHTML = styles;
+    document.head.appendChild(stl);
+
+    // ===== Draw puzzle
     document.querySelector(this._container).innerHTML = '';
     for (let i = 0; i < this._size.cols; i++) { // cols
         for (let j = 0; j < this._size.rows; j++) { // rows
@@ -95,7 +98,7 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
                     img.style.display = 'none';
                 }
                 
-                div.style.backgroundColor = this._styles.color;
+                div.style.backgroundColor = this._styles.emtry.color;
                 div.style.zIndex = '2';
             } else {
                 img.src = this._image;
@@ -110,7 +113,10 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
         }
     }
 }
-Puzzle15.prototype.Move = function () { // This method will be called when user clicks a pic
+Puzzle15.prototype.Shuffle = function () { // Shuffle puzzle
+    //
+}
+Puzzle15.prototype.IsSolved = function () { // Is puzzle solved
     //
 }
 

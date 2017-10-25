@@ -14,11 +14,12 @@ function Puzzle15 (options, styles) {
     this._container = options.container || '#puzzlediv';
     this._emtry = {
         x: options.emtry.x || 0,
-        y: options.emtry.y || 0
+        y: options.emtry.y || 0,
+        element: null
     };
     this._styles = {
         animation: {
-            duration: styles.animation.duration || 0.3,
+            duration: styles.animation.duration || 300,
             function: styles.animation.function || 'linear'
         },
         emtry: {
@@ -80,12 +81,8 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
             let div = document.createElement('div');
             div.style.left = (this._Puzzle[i][j].x) * Math.floor(this._size.width/this._size.cols) + 'px';
             div.style.top = (this._Puzzle[i][j].y) * Math.floor(this._size.height/this._size.rows) + 'px';
-            div.setAttribute('data-ij', (i+''+j));
+            //div.setAttribute('data-ij', (i+''+j));
             //div.setAttribute('data-xy', (this._Puzzle[i][j].x+''+Puzzle[i][j].y));
-            
-            div.onclick = function (e) {
-                let cx = i, cy = j;
-            }
 
             let img = document.createElement('img');
 
@@ -100,11 +97,40 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
                 
                 div.style.backgroundColor = this._styles.emtry.color;
                 div.style.zIndex = '2';
+                this._emtry.element = img;
             } else {
                 img.src = this._image;
                 img.style.left = (i) * -1 * Math.floor(this._size.width/this._size.cols) + 'px';
                 img.style.top = (j) * -1 * Math.floor(this._size.height/this._size.rows) + 'px';
                 div.style.zIndex = '1';
+
+                let P = this;
+                // == On click
+                div.onclick = function (e) {
+                    let ci = i, cj = j;
+                    
+                    let cx = P._Puzzle[ci][cj].x; // current x
+                    let cy = P._Puzzle[ci][cj].y;
+                    let ex = P._Puzzle[P._emtry.x][P._emtry.y].x; // emtry x
+                    let ey = P._Puzzle[P._emtry.x][P._emtry.y].y;
+
+                    if ((Math.abs(cx-ex) == 1 && (cy == ey)) || (Math.abs(cy-ey) == 1 && (cx == ex))) {
+                        P._Puzzle[ci][cj].x = ex;
+                        P._Puzzle[ci][cj].y = ey;
+                        P._Puzzle[P._emtry.x][P._emtry.y].x = cx;
+                        P._Puzzle[P._emtry.x][P._emtry.y].y = cy;
+
+                        // = Redraw new values
+                        e.target.parentElement.style.left = 
+                        /**/(P._Puzzle[ci][cj].x) * Math.floor(P._size.width/P._size.cols) + 'px';
+                        e.target.parentElement.style.top = 
+                        /**/(P._Puzzle[ci][cj].y) * Math.floor(P._size.height/P._size.rows) + 'px';
+                        P._emtry.element.parentElement.style.left = 
+                        /**/(P._Puzzle[P._emtry.x][P._emtry.y].x) * Math.floor(P._size.width/P._size.cols) + 'px';
+                        P._emtry.element.parentElement.style.top = 
+                        /**/(P._Puzzle[P._emtry.x][P._emtry.y].y) * Math.floor(P._size.height/P._size.rows) + 'px';
+                    };
+                }
             }
 
             div.appendChild(img);

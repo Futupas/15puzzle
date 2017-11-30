@@ -106,7 +106,7 @@ Puzzle15.prototype.Draw = function () { // Draws puzzle with everyting (filling 
 
                 let P = this;
                 // == On click
-                div.onclick = function (e) {
+                img.onclick = function (e) {
                     let ci = i, cj = j;
                     
                     let cx = P._Puzzle[ci][cj].x; // current x

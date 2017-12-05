@@ -1,4 +1,12 @@
 'use strict';
+function naToArray(nodearray) {
+    let usualarray = [];
+    for (let i = 0; i < nodearray.length; i++) {
+        usualarray.push(nodearray[i]);
+    }
+    return usualarray;
+}
+
 function MakePuzzle() {
     let options = {
         size: {
@@ -53,16 +61,10 @@ function OnImageChange () {
         console.log('auto');
     } else {
         document.querySelector('select[name="image"] + label').style.display = 'none';
-        console.log('auto');
+        console.log('none');
     }
 }
 function OnEmtryImageChange () {
     
 }
 
-function naToArray(nodearray) {
-    let usualarray = [];
-    for (let i = 0; i < nodearray.lenght; i++) {
-        usualarray.push(nodearray[i]);
-    }
-}

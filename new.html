@@ -20,18 +20,18 @@
     <div id="settingsdiv">
         <label>
             Field: 
-            <input value="512" type="number" max="2000" min="0" step="100">
+            <input name="fieldx" value="512" type="number" max="2000" min="0" step="100">
             &times;
-            <input value="512" type="number" max="2000" min="0" step="100">px.
+            <input name="fieldy" value="512" type="number" max="2000" min="0" step="100">px.
         </label><br />
         <label>
             Cell: 
-            <input value="4" type="number" min="0" max="100" step="1">
+            <input name="cellx" value="4" type="number" min="0" max="100" step="1">
             &times;
-            <input value="4" type="number" min="0" max="100" step="1">.
+            <input name="celly" value="4" type="number" min="0" max="100" step="1">.
         </label><br />
         <label>Margins: 
-            <input value="2" type="number" min="0" max="2000" step="1">px.
+            <input name="margins" value="2" type="number" min="0" max="2000" step="1">px.
         </label><br />
         <label>Emtry: 
             <label>
@@ -43,80 +43,30 @@
             <label>
                 <input type="radio" name="emtrycell" value="random" />
                 Random</label>.
+        </label><br />
+        <label>
+            Image: <select name="image" onchange="OnImageChange()">
+                <option value="image1" selected>image 1</option>
+                <option value="image2">image 2</option>
+                <option value="image3">image 3</option>
+                <option value="image4">image 4</option>
+
+                <option value="custom">custom</option>
+            </select>.
+            <label style="display: none;">Link: <input name="imgurl" type="url" size="20" />.</label>
+        </label><br />
+        <label>
+            Emtry cell: <select name="emtrycellimage">
+                <option value="color">color</option>
+                <option value="image" selected>image 2</option>
+                <option value="custom">custom image</option>
+            </select>.
+            <label style="display: none;">Link: <input name="cellimageurl" type="url" size="20" />.</label>
         </label>
+        <button onclick="MakePuzzle();"></button>
     </div>
     <div id="puzzlediv" style=""></div>
     <script src="./puzzle.js"></script>
-    <script>
-        'use strict';
-        let options = {
-            size: {
-                rows: 4,             // строки
-                cols: 4,             // столбцы
-                width: 512,          // ширина
-                height: 512          // высота
-            },
-            image: 'puzzleimage.png',               // картинка
-            container: '#puzzlediv',           // id контейнер (родитель)
-            emtry: {
-                x: 3,                // x пустой ячейки
-                y: 3                 // y пустой ячейки
-            }         
-        };
-        let styles = {
-            animation: {
-                duration: 300, //ms
-                function: 'linear' //linear
-            },
-            emtry: {
-                color: '#999999',
-                image: 'emtryimage.png'
-            },
-            border: {
-                width: 2,
-                style: 'solid',
-                color: '#999999'
-            }
-        };
-
-        switch (window.location.hash.toLowerCase()) {
-            case '#vika1':
-                options = {
-                    size: {
-                        rows: 4,
-                        cols: 4,
-                        width: 512,
-                        height: 512
-                    },
-                    image: 'https://i.imgur.com/oUlcfQd.jpg',
-                    container: '#puzzlediv',
-                    emtry: {
-                        x: 3,
-                        y: 3
-                    }         
-                };
-                break;
-            case '#vika2': 
-                options = {
-                    size: {
-                        rows: 10,
-                        cols: 5,
-                        width: 512,
-                        height: 512
-                    },
-                    image: 'https://i.imgur.com/oUlcfQd.jpg',
-                    container: '#puzzlediv',
-                    emtry: {
-                        x: 0,
-                        y: 0
-                    }         
-                };
-                break;
-        }
-
-        let a = new Puzzle15(options, styles);
-        a.Draw();
-
-    </script>
+    <script src="./app.js"></script>
 </body>
 </html>
